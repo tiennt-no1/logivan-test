@@ -30,7 +30,6 @@ module LogivanTest
                     ammount_discountable = applied_items.inject(0){|sum, item| sum += item.price}
                     ammount_discountable * percent_discount/100
                 end
-
         end
 
         def total_discount
