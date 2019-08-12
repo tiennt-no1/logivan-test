@@ -20,6 +20,10 @@ module LogivanTest
             end
         end
 
+        def ammount_discountable
+            applied_items.inject(0){|sum, item| sum += item.price}
+        end
+
         def calculate_discount
             return unless discountable
             return if applied_items.length == 0
@@ -27,7 +31,6 @@ module LogivanTest
                 if price_discount
                     applied_items.length * (applied_items.first.price - price_discount)
                 else percent_discount
-                    ammount_discountable = applied_items.inject(0){|sum, item| sum += item.price}
                     ammount_discountable * percent_discount/100
                 end
         end
