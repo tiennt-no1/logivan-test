@@ -1,0 +1,11 @@
+# to store fixture stuff
+items:
+  - code: 001
+    name: Lavender heart
+    price: 9.25
+  - code: 002
+    name: Personalised cufflinks
+    price: 45.00
+  - code: 003
+    name: kids T-shirt
+    price: 19.95
