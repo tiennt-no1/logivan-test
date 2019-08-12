@@ -1,10 +1,11 @@
 module LogivanTest
     class Item
-      def initialize(code, name, price)
-        @code = code
-        @name = name
-        @price = price
-      end
+        attr_accessor :code, :name, :price
+        def initialize(code =nil , name =nil , price = nil)
+            @code = code
+            @name = name
+            @price = price
+        end
     end
 end
   
