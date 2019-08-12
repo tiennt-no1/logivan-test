@@ -1,3 +1,5 @@
+require 'active_support/core_ext/object/blank'
+
 module LogivanTest
     class Item
         attr_accessor :code, :name, :price
@@ -12,7 +14,7 @@ module LogivanTest
         end
 
         def valid?
-            @code.present? && @name.present? && @price.present?
+            code.present? && name.present? && price.present?
         end
     end
 end
