@@ -14,6 +14,7 @@ module LogivanTest
       @rules = rules
       @items = []
     end
+    attr_accessor :items, :rules
 
     def scan(item)
       raise 'Error: cannot scan invalid item!' unless item.is_a? Item
@@ -26,7 +27,7 @@ module LogivanTest
         rule.items =  @items
         rule.calculate_discount; sum += rule.total_discount 
       end
-      total_price - total_discount
+      (total_price - total_discount).round(2)
     end
   end
 end

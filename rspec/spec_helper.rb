@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rspec'
+require 'faker'
 require_relative '../lib/item.rb'
 
 module Helpers
