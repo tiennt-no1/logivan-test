@@ -6,6 +6,7 @@ module LogivanTest
             @percent_discount =  options[:percent_discount] || 0
             @price_discount =  options[:price_discount] || 0
             @code_apply = options[:code_apply] || :all
+            @items= []
         end
         attr_accessor :total_discount, :percent_discount, :price_discount, :code_apply
 
@@ -26,7 +27,7 @@ module LogivanTest
         end
 
         def calculate_discount
-            return unless discountable
+            return unless discountable?
             return if applied_items.length == 0
             @total_discount = 
                 if price_discount
