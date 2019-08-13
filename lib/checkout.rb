@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
+require 'active_support/core_ext/object/blank'
+require_relative './rule'
 module LogivanTest
   class Checkout
     def initialize(rules)
       raise 'Error: rules cannot empty!' if rules.blank?
+
+      rules.each do |rule|
+        raise 'Error: invalid input promotion rule!' if rule.class != Rule
+      end
 
       @rules = rules
       @items = []
