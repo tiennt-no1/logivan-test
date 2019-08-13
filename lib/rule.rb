@@ -31,6 +31,7 @@ module LogivanTest
     def calculate_discount
       return unless discountable?
       return if applied_items.empty?
+
       @total_discount =
         if discount_price.positive?
           applied_items.length * (applied_items.first.price - discount_price)
