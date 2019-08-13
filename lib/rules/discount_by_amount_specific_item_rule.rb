@@ -3,12 +3,12 @@
 require_relative '../rule.rb'
 module LogivanTest
   class DiscountByAmountSpecificItemRule < Rule
-    def initialize(options = { code_apply: nil, amount_items: 0 })
+    def initialize(options = { apply_code: nil, amount_items: 0 })
       super
       @amount_items = options[:amount_items]
-      @code_apply = options[:code_apply]
+      @apply_code = options[:apply_code]
     end
-    attr_accessor :code_apply, :amount_items
+    attr_accessor :apply_code, :amount_items
 
     def discountable?
       applied_items.length >= amount_items && amount_items.positive?

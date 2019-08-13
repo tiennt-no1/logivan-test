@@ -7,20 +7,20 @@ module LogivanTest
       @total_discount = options[:total_discount] || 0
       @percent_discount = options[:percent_discount] || 0
       @discount_price = options[:discount_price] || 0
-      @code_apply = options[:code_apply] || :all
+      @apply_code = options[:apply_code] || :all
       @items = []
     end
-    attr_accessor :total_discount, :percent_discount, :discount_price, :code_apply, :items
+    attr_accessor :total_discount, :percent_discount, :discount_price, :apply_code, :items
 
     def discountable?
       false
     end
 
     def applied_items
-      if @code_apply == :all
+      if @apply_code == :all
         @items
       else
-        items.map { |item| item.code == @code_apply }
+        items.select { |item| item.code == @apply_code }
       end
     end
 

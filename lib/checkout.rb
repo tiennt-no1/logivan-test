@@ -28,6 +28,7 @@ module LogivanTest
         rule.items =  @items
         rule.calculate_discount; sum += rule.total_discount
       end
+      binding.pry
       (total_price - total_discount).round(2)
     end
   end
