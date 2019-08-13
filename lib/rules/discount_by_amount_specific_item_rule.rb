@@ -1,14 +1,16 @@
+require_relative "../rule.rb"
 module LogivanTest
     class DiscountByAmountSpecificItemRule < Rule
 
-        def initialize({code_apply: nil, amount_items: 0})
+        def initialize(options = {code_apply: nil, amount_items: 0})
             super
-            throw "Error: amount item must be greater than 0" if @amount_items <= 0 
-            @amount_items = amount_items
+            @amount_items = options[:amount_items]
+            @code_apply = options[:code_apply]
         end
-        
+        attr_accessor :code_apply, :amount_items
+
         def discountable?
-            applied_items.length >= amount_items
+            applied_items.length >= amount_items && amount_items > 0
         end
     end
 end

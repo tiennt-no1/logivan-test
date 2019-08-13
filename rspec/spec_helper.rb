@@ -6,7 +6,6 @@ shared_examples_for 'promotion_rule' do
         expect(rule.total_discount).to eq 0
         expect(rule.percent_discount).to eq 0
         expect(rule.price_discount).to eq 0
-        expect(rule.code_apply).to eq :all
         expect(rule.discountable?).to be false
         expect(rule.ammount_discountable).to eq 0
         expect(rule.total_discount).to eq 0
