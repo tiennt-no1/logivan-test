@@ -8,7 +8,7 @@ module LogivanTest
             @code_apply = options[:code_apply] || :all
             @items= []
         end
-        attr_accessor :total_discount, :percent_discount, :price_discount, :code_apply
+        attr_accessor :total_discount, :percent_discount, :price_discount, :code_apply, :items
 
         def discountable?
             false
