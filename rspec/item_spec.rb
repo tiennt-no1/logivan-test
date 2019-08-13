@@ -3,15 +3,7 @@
 require 'rspec'
 require 'faker'
 require_relative '../lib/item.rb'
-
-create_item = lambda {
-  params = {
-    code: Faker::Number.number(digits: 3).to_s,
-    name: Faker::FunnyName.name,
-    price: Faker::Number.decimal(l_digits: 2)
-  }
-  LogivanTest::Item.new params
-}
+require_relative './spec_helper.rb'
 
 RSpec.describe LogivanTest::Item do
   it 'create empty item' do
@@ -22,7 +14,7 @@ RSpec.describe LogivanTest::Item do
   end
 
   it 'create unempty item' do
-    item = create_item.call
+    item = create_item
     expect(item.code).to_not be_nil
     expect(item.name).to_not be_nil
     expect(item.price).to_not be_nil
@@ -32,17 +24,17 @@ RSpec.describe LogivanTest::Item do
     empty_item = LogivanTest::Item.new
     expect(empty_item.valid?).to be false
 
-    item = create_item.call
+    item = create_item
     expect(item.valid?).to be true
     item.name = nil
     expect(item.valid?).to be false
 
-    item = create_item.call
+    item = create_item
     expect(item.valid?).to be true
     item.code = nil
     expect(item.valid?).to be false
 
-    item = create_item.call
+    item = create_item
     expect(item.valid?).to be true
     item.price = nil
     expect(item.valid?).to be false

@@ -1,6 +1,22 @@
 # frozen_string_literal: true
 
 require 'rspec'
+require_relative '../lib/item.rb'
+
+module Helpers
+  def create_item
+    params = {
+      code: Faker::Number.number(digits: 3).to_s,
+      name: Faker::FunnyName.name,
+      price: Faker::Number.decimal(l_digits: 2)
+    }
+    LogivanTest::Item.new params
+  end
+end
+
+RSpec.configure do |c|
+  c.include Helpers
+end
 
 shared_examples_for 'promotion_rule' do
   it 'test default options of rule' do
