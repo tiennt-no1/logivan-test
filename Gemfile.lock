@@ -18,6 +18,11 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-nav (0.3.0)
+      pry (>= 0.9.10, < 0.13.0)
+    pry-remote (0.1.8)
+      pry (~> 0.9)
+      slop (~> 3.0)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -31,6 +36,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.2)
+    slop (3.6.0)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -42,6 +48,8 @@ DEPENDENCIES
   activesupport (~> 5.0)
   faker
   pry
+  pry-nav
+  pry-remote
   rspec
 
 BUNDLED WITH
