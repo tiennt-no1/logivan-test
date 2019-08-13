@@ -1,12 +1,13 @@
 module LogivanTest
     class Rule
-        def initializer(options)
+        def initialize(options = {})
             # set default attributes
             @total_discount =  options[:total_discount] || 0
             @percent_discount =  options[:percent_discount] || 0
             @price_discount =  options[:price_discount] || 0
             @code_apply = options[:code_apply] || :all
         end
+        attr_accessor :total_discount, :percent_discount, :price_discount, :code_apply
 
         def discountable?
             false
