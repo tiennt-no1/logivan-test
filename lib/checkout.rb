@@ -16,7 +16,7 @@ module LogivanTest
     end
 
     def scan(item)
-      raise 'Error: rules cannot empty!' if item.class != LogivanTest::Item
+      raise 'Error: cannot scan invalid item!' if item.class != LogivanTest::Item
 
       @items.add(item)
     end
