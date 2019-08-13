@@ -14,10 +14,10 @@ RSpec.describe LogivanTest::Checkout do
   end
 
   it 'invalid input scan item' do
-    rule1= LogivanTest::Rule.new
-    rule2= LogivanTest::Rule.new
+    rule1 = LogivanTest::Rule.new
+    rule2 = LogivanTest::Rule.new
     checkout = LogivanTest::Checkout.new([rule1, rule2])
-    expect { checkout.scan}.to raise_error(ArgumentError)
+    expect { checkout.scan }.to raise_error(ArgumentError)
     expect { checkout.scan(1) }.to raise_error('Error: cannot scan invalid item!')
     expect { checkout.scan({}) }.to raise_error('Error: cannot scan invalid item!')
   end
