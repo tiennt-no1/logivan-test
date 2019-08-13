@@ -6,11 +6,11 @@ module LogivanTest
       # set default attributes
       @total_discount = options[:total_discount] || 0
       @percent_discount = options[:percent_discount] || 0
-      @price_discount = options[:price_discount] || 0
+      @discount_price = options[:discount_price] || 0
       @code_apply = options[:code_apply] || :all
       @items = []
     end
-    attr_accessor :total_discount, :percent_discount, :price_discount, :code_apply, :items
+    attr_accessor :total_discount, :percent_discount, :discount_price, :code_apply, :items
 
     def discountable?
       false
@@ -33,8 +33,8 @@ module LogivanTest
       return if applied_items.empty?
 
       @total_discount =
-        if price_discount
-          applied_items.length * (applied_items.first.price - price_discount)
+        if discount_price
+          applied_items.length * (applied_items.first.price - discount_price)
         elsif percent_discount
           ammount_discountable * percent_discount / 100
           end

@@ -8,7 +8,7 @@ module LogivanTest
       raise 'Error: rules cannot empty!' if rules.blank?
 
       rules.each do |rule|
-        raise 'Error: invalid input promotion rule!' if rule.class != Rule
+        raise 'Error: invalid input promotion rule!' unless rule.is_a? Rule
       end
 
       @rules = rules
@@ -16,13 +16,13 @@ module LogivanTest
     end
 
     def scan(item)
-      raise 'Error: cannot scan invalid item!' if item.class != LogivanTest::Item
+      raise 'Error: cannot scan invalid item!' unless item.is_a? Item
 
-      @items.add(item)
+      @items << item
     end
 
     def total
-      total_price = @items.inject(0) { |sum| sum += item.price }
+      total_price = @items.inject(0) { |sum, item| sum += item.price }
       total_discount = @rules.inject(0) { |sum, rule| rule.calculate_discount; sum += rule.total_discount }
       total_price - total_discount
     end
