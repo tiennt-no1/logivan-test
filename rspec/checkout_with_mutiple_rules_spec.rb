@@ -2,7 +2,6 @@
 
 require 'rspec'
 require 'yaml'
-require 'pry'
 require_relative '../lib/checkout.rb'
 require_relative '../lib/rule.rb'
 require_relative '../lib/rules/discount_by_amount_specific_item_rule.rb'
