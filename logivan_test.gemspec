@@ -11,8 +11,10 @@ Gem::Specification.new do |s|
     'lib/checkout.rb',
     'lib/item.rb',
     'lib/rule.rb'
-
   ]
-  s.require_paths = ['lib']
-  s.add_dependency 'rspec', '3.4.0'
+  s.require_paths = %w[lib rspec]
+  s.add_dependency 'activesupport', '~> 5.0'
+  s.add_dependency 'faker', '~> 2.1.2'
+  s.add_dependency 'rspec', '~> 3.8.0'
+  s.add_dependency 'rspec-benchmark', '~> 0.5.0'
 end
