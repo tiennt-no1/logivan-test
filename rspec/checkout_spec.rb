@@ -17,7 +17,7 @@ def discount_10_percent(items, discount_point)
 end
 
 def discount_by_drop_price(items, drop_code, drop_price, min_amount)
-  discountable = items.select{|item| item.code == drop_code}.size >= min_amount
+  discountable = items.select { |item| item.code == drop_code }.size >= min_amount
   sum = items.inject(0) do |sum, item|
     sum += item.code == (discountable && drop_code) ? drop_price : item.price
   end
@@ -71,7 +71,7 @@ RSpec.describe LogivanTest::Checkout do
     discount_point = 60
     promotion_rules = [LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: 10)]
     checkout = LogivanTest::Checkout.new(promotion_rules)
-    (1..100).each { checkout.scan create_item }
+    100.times { checkout.scan create_item }
     expect(checkout.total).to equal(discount_10_percent(checkout.items, discount_point))
   end
 
@@ -101,7 +101,7 @@ RSpec.describe LogivanTest::Checkout do
 
     item2 = create_item; item2.price = item_price; item2.code = item.code
     checkout.scan item
-    expect(checkout.total).to equal(discount_price*2)
+    expect(checkout.total).to equal(discount_price * 2)
   end
 
   it 'checkout with discount by drop price with 100 items' do
@@ -111,16 +111,16 @@ RSpec.describe LogivanTest::Checkout do
     promotion_rules = [
       LogivanTest::DiscountByAmountSpecificItemRule.new(
         apply_code: apply_code, amount_items: 1, discount_price: discount_price
-        )
-      ]
-      checkout = LogivanTest::Checkout.new(promotion_rules)
-      (1..100).each do
-        item = create_item
-        item.code = apply_code
-        item.price = item_price
-        checkout.scan item
-      end
-    expect(checkout.total).to equal(discount_price*100)
+      )
+    ]
+    checkout = LogivanTest::Checkout.new(promotion_rules)
+    100.times do
+      item = create_item
+      item.code = apply_code
+      item.price = item_price
+      checkout.scan item
+    end
+    expect(checkout.total).to equal(discount_price * 100)
   end
 
   it 'should error when discount price bigger than normal price' do
@@ -130,13 +130,13 @@ RSpec.describe LogivanTest::Checkout do
     promotion_rules = [
       LogivanTest::DiscountByAmountSpecificItemRule.new(
         apply_code: apply_code, amount_items: 1, discount_price: discount_price
-        )
-      ]
-      checkout = LogivanTest::Checkout.new(promotion_rules)
-      item = create_item
-      item.code = apply_code
-      item.price = item_price
-      checkout.scan item
-    expect{checkout.total}.to raise_error("Error: The price of discount have to smaller than common price")
+      )
+    ]
+    checkout = LogivanTest::Checkout.new(promotion_rules)
+    item = create_item
+    item.code = apply_code
+    item.price = item_price
+    checkout.scan item
+    expect { checkout.total }.to raise_error('Error: The price of discount have to smaller than common price')
   end
 end

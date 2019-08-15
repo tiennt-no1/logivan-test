@@ -31,11 +31,13 @@ module LogivanTest
     def calculate_discount
       return unless discountable?
       return if applied_items.empty?
+
       item_price = applied_items.first.price
 
       @total_discount =
         if discount_price.positive?
-          raise "Error: The price of discount have to smaller than common price" if discount_price > item_price
+          raise 'Error: The price of discount have to smaller than common price' if discount_price > item_price
+
           # pick default first applied item to get price
           applied_items.length * (item_price - discount_price)
         elsif percent_discount.positive?
