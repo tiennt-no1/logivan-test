@@ -102,8 +102,7 @@ RSpec.describe LogivanTest::Checkout do
     expect(checkout.total).to equal(expect_price)
   end
 
-  it 'Error when applied mutiple rules for same code' do
-    discount_point = 1
+  it 'Error when applied mutiple rules for one item' do
     promotion_rules = [
       LogivanTest::DiscountByAmountSpecificItemRule.new(
         apply_code: apply_code, amount_items: 1, discount_price: discount_price
