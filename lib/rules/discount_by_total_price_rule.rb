@@ -5,6 +5,7 @@ module LogivanTest
   class DiscountByTotalPriceRule < Rule
     def initialize(options = { discount_point: 0 })
       super
+      @name = 'Discount on total'
       @discount_point = options[:discount_point]
     end
     attr_accessor :discount_point

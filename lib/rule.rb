@@ -8,11 +8,13 @@ module LogivanTest
       @percent_discount = options[:percent_discount] || 0
       @discount_price = options[:discount_price] || 0
       raise 'Error: Cannot combine percent_discount and discount_price option' if @percent_discount.positive? && @discount_price.positive?
+
       @apply_code = options[:apply_code] || :all
       @items = []
+      @name = 'Promotion discount rule'
     end
     attr_accessor :total_discount, :percent_discount, :discount_price, :apply_code, :items
-
+    attr_reader :name
     def discountable?
       false
     end

@@ -5,11 +5,11 @@ require 'faker'
 require_relative '../lib/item.rb'
 
 module Helpers
-  def create_item
+  def create_item(code = nil, price = nil)
     params = {
-      code: Faker::Number.number(digits: 3).to_s,
+      code: code ||Faker::Number.number(digits: 3).to_s,
       name: Faker::FunnyName.name,
-      price: Faker::Number.decimal(l_digits: 2)
+      price: price || Faker::Number.decimal(l_digits: 2)
     }
     LogivanTest::Item.new params
   end
@@ -34,6 +34,6 @@ shared_examples_for 'promotion_rule' do
   end
 
   it 'raise error when set both percent_discount and discount_price' do
-    expect{ described_class.new(discount_price: 10, percent_discount: 10) }.to raise_error('Error: Cannot combine percent_discount and discount_price option')
+    expect { described_class.new(discount_price: 10, percent_discount: 10) }.to raise_error('Error: Cannot combine percent_discount and discount_price option')
   end
 end

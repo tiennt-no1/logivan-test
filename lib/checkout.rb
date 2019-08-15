@@ -51,5 +51,17 @@ module LogivanTest
       end
       (total_price - total_discount).round(2)
     end
+
+    def detail
+      @items.each do |item|
+        puts "#{item.code} - #{item.name} : #{item.price}"
+      end
+      puts 'Discount'
+      @rules.each do |rule|
+        puts "#{rule.name} : #{rule.total_discount}"
+      end
+      puts '-------------------'
+      puts "Total: #{total}"
+    end
   end
 end

@@ -5,6 +5,7 @@ module LogivanTest
   class DiscountByAmountSpecificItemRule < Rule
     def initialize(options = { apply_code: nil, amount_items: 0 })
       super
+      @name = 'Discount on specific item'
       @amount_items = options[:amount_items]
       @apply_code = options[:apply_code]
     end

@@ -21,10 +21,7 @@ RSpec.describe 'Perform testing' do
   let (:percent_discount) { 10 }
 
   def create_sample_item
-    item = create_item
-    item.code = apply_code
-    item.price = item_price
-    item
+    create_item apply_code, item_price
   end
 
   def create_sample_checkout
@@ -41,6 +38,7 @@ RSpec.describe 'Perform testing' do
     expect do
       checkout = create_sample_checkout
       x.times.each { checkout.scan create_item }
+      checkout.total
     end.to perform_under(500).ms
   end
 
