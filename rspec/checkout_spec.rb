@@ -71,7 +71,7 @@ RSpec.describe LogivanTest::Checkout do
   #   discount_point = 60
   #   promotion_rules = [LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: 10)]
   #   checkout = LogivanTest::Checkout.new(promotion_rules)
-  #   [1..100].each { checkout.scan create_item }
+  #   (1..100).each { checkout.scan create_item }
   #   expect(checkout.total).to equal(discount_10_percent(checkout.items, discount_point))
   # end
 
@@ -106,6 +106,7 @@ RSpec.describe LogivanTest::Checkout do
 
   it 'checkout with discount by drop price with 100 items' do
     discount_price = 40.0
+    item_price = 50.0
     apply_code = '001'
     promotion_rules = [
       LogivanTest::DiscountByAmountSpecificItemRule.new(
@@ -113,12 +114,12 @@ RSpec.describe LogivanTest::Checkout do
         )
       ]
       checkout = LogivanTest::Checkout.new(promotion_rules)
-      [1..100].each do 
+      (1..100).each do
         item = create_item
         item.code = apply_code
+        item.price = item_price
         checkout.scan item
       end
-      binding.pry
     expect(checkout.total).to equal(discount_price*100)
   end
 end

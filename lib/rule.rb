@@ -34,6 +34,7 @@ module LogivanTest
 
       @total_discount =
         if discount_price.positive?
+          # pick default first applied item to get price
           applied_items.length * (applied_items.first.price - discount_price)
         elsif percent_discount.positive?
           ammount_discountable * percent_discount / 100
