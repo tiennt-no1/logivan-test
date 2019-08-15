@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'rspec'
+require 'rspec-benchmark'
 require 'yaml'
-require 'pry'
 require_relative '../lib/checkout.rb'
 require_relative '../lib/rule.rb'
 require_relative '../lib/rules/discount_by_amount_specific_item_rule.rb'
@@ -10,7 +10,8 @@ require_relative '../lib/rules/discount_by_total_price_rule.rb'
 require_relative '../lib/item.rb'
 require_relative './spec_helper.rb'
 
-RSpec.describe LogivanTest::Checkout do
+RSpec.describe 'Perform testing' do
+  include RSpec::Benchmark::Matchers
   let (:discount_price) { 60.0 }
   let (:item_price) { 70.0 }
   let (:discount_point) { 70.0 }
@@ -36,10 +37,22 @@ RSpec.describe LogivanTest::Checkout do
     checkout = LogivanTest::Checkout.new(promotion_rules)
   end
 
-  it 'test response with 100 items' do
+  def test_checkout_with_x_items(x)
     expect do
       checkout = create_sample_checkout
-      100.each { checkout.scan create_item }
-    end.perform_under(100).ms
+      x.times.each { checkout.scan create_item }
+    end.to perform_under(500).ms
+  end
+
+  it 'test response with 100 items' do
+    test_checkout_with_x_items(100)
+  end
+
+  it 'test response with 1000 items' do
+    test_checkout_with_x_items(1000)
+  end
+
+  it 'test response with 100000 items' do
+    test_checkout_with_x_items(100_000)
   end
 end
