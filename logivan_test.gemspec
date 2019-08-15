@@ -8,9 +8,8 @@ Gem::Specification.new do |s|
   s.version = '0.0.0'
   s.summary = 'for interview test'
   s.files = [
-    'lib/checkout.rb',
-    'lib/item.rb',
-    'lib/rule.rb'
+    'lib/*',
+    'rspec/*'
   ]
   s.require_paths = %w[lib rspec]
   s.add_dependency 'activesupport', '~> 5.0'
