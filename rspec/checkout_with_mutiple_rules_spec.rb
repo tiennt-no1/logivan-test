@@ -35,7 +35,6 @@ RSpec.describe LogivanTest::Checkout do
     ]
     checkout = LogivanTest::Checkout.new(promotion_rules)
   end
-  
 
   it 'checkout with 2 promotion rules without priority' do
     checkout = create_sample_checkout
@@ -47,7 +46,7 @@ RSpec.describe LogivanTest::Checkout do
     expect_price -= price_without_discount * percent_discount / 100 if price_without_discount >= discount_point
     expect(checkout.total).to equal(expect_price)
   end
-  
+
   it 'should clear item' do
     checkout = create_sample_checkout
     checkout.scan create_sample_item
@@ -99,7 +98,7 @@ RSpec.describe LogivanTest::Checkout do
         apply_code: apply_code, amount_items: 1, discount_price: discount_price
       )
     ]
-    expect{LogivanTest::Checkout.new(promotion_rules)}.to raise_error('Error: Cannot applied mutiple rules for 1 item code')
+    expect { LogivanTest::Checkout.new(promotion_rules) }.to raise_error('Error: Cannot applied mutiple rules for 1 item code')
   end
 
   it 'Apply drop price for 2 items' do
@@ -116,11 +115,10 @@ RSpec.describe LogivanTest::Checkout do
     checkout.scan item1
     item2 = create_sample_item; item2.code = apply_code2
     checkout.scan item2
-    expect(checkout.total).to equal(discount_price*2) # because both 2 items is discount
+    expect(checkout.total).to equal(discount_price * 2) # because both 2 items is discount
 
     item3 = create_sample_item; item2.code = unapply_code
     checkout.scan item3
-    expect(checkout.total).to equal(discount_price*2+item_price) # 2 items discount, 1 not
+    expect(checkout.total).to equal(discount_price * 2 + item_price) # 2 items discount, 1 not
   end
 end
-

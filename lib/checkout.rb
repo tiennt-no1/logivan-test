@@ -11,7 +11,8 @@ module LogivanTest
 
       rules.each do |rule|
         raise 'Error: invalid input promotion rule!' unless rule.is_a? Rule
-        raise "Error: Cannot applied mutiple rules for 1 item code" if apply_code_hash[rule.apply_code] && rule.apply_code != :all
+        raise 'Error: Cannot applied mutiple rules for 1 item code' if apply_code_hash[rule.apply_code] && rule.apply_code != :all
+
         apply_code_hash[rule.apply_code] = true
       end
 
@@ -39,7 +40,7 @@ module LogivanTest
     def total
       total_price = @items.inject(0) { |sum, item| sum += item.price }
       total_discount = @rules.inject(0) do |sum_total_discount, rule|
-        rule.items =  @items
+        rule.items = @items
         if sum_total_discount.positive? && @rules_priority && rule.apply_code == :all
 
           current_total = total_price - sum_total_discount

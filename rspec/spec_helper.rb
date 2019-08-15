@@ -2,6 +2,7 @@
 
 require 'rspec'
 require 'faker'
+require 'rspec-benchmark'
 require_relative '../lib/item.rb'
 
 module Helpers
@@ -17,6 +18,7 @@ end
 
 RSpec.configure do |c|
   c.include Helpers
+  c.include RSpec::Benchmark::Matchers
 end
 
 shared_examples_for 'promotion_rule' do
