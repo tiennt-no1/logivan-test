@@ -52,7 +52,7 @@ RSpec.describe 'Perform testing' do
     test_checkout_with_x_items(1000)
   end
 
-  it 'test response with 100000 items' do
-    test_checkout_with_x_items(100_000)
-  end
+  # it 'test response with 100000 items' do
+  #   test_checkout_with_x_items(100_000)
+  # end
 end
