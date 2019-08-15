@@ -32,4 +32,8 @@ shared_examples_for 'promotion_rule' do
     rule.calculate_discount
     expect(rule.total_discount).to eq 0
   end
+
+  it 'raise error when set both percent_discount and discount_price' do
+    expect{ described_class.new(discount_price: 10, percent_discount: 10) }.to raise_error('Error: Cannot combine percent_discount and discount_price option')
+  end
 end
