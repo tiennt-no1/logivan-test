@@ -7,7 +7,11 @@ module LogivanTest
     def initialize(rules)
       raise 'Error: rules cannot empty!' if rules.blank?
 
+      apply_code_hash = {}
+
       rules.each do |rule|
+        raise "Error: Cannot applied mutiple rules for 1 item code" if apply_code_hash[rule.apply_code] && rule.apply_code != :all
+        apply_code_hash[rule.apply_code] = true
         raise 'Error: invalid input promotion rule!' unless rule.is_a? Rule
       end
 

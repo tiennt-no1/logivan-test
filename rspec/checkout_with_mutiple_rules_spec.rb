@@ -37,7 +37,8 @@ RSpec.describe LogivanTest::Checkout do
     item.price = item_price
     item
   end
-  it 'checkout with 2 promotion rules' do
+
+  def create_sample_checkout
     promotion_rules = [
       LogivanTest::DiscountByAmountSpecificItemRule.new(
         apply_code: apply_code, amount_items: 1, discount_price: discount_price
@@ -45,18 +46,31 @@ RSpec.describe LogivanTest::Checkout do
       LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: percent_discount)
     ]
     checkout = LogivanTest::Checkout.new(promotion_rules)
-    checkout.scan create_sample_item
+  end
+  
 
+  it 'checkout with 2 promotion rules without priority' do
+    checkout = create_sample_checkout
+    checkout.scan create_sample_item
     # applied 2 rules based on price_without_discount
     price_without_discount = item_price
     expect_price = discount_price # applied rule 1
     # applied rule 2
     expect_price -= price_without_discount * percent_discount / 100 if price_without_discount >= discount_point
     expect(checkout.total).to equal(expect_price)
+  end
+  
+  it 'should clear item' do
+    checkout = create_sample_checkout
+    checkout.scan create_sample_item
+    checkout.clear_items
+    expect(checkout.items.size).to eq(0)
+    expect(checkout.total).to eq(0)
+  end
 
-    # checkout.clear_items
-    # expect(checkout.items.size).to eq(0)
-
+  it 'checkout with 2 promotion rules with priority' do
+    checkout = create_sample_checkout
+    checkout.scan create_sample_item
     # applied 2 rules based on price after apply each rule
     checkout.rules_priority = true
     # applied rule 1
@@ -64,5 +78,40 @@ RSpec.describe LogivanTest::Checkout do
     # applied rule 2
     expect_price -= expect_price * percent_discount / 100 if expect_price >= discount_point
     expect(checkout.total).to equal(expect_price)
+  end
+
+  it 'checkout with 3 promotion rules with priority, 2 rules discount 10%' do
+    discount_point = 1
+    promotion_rules = [
+      LogivanTest::DiscountByAmountSpecificItemRule.new(
+        apply_code: apply_code, amount_items: 1, discount_price: discount_price
+      ),
+      LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: percent_discount),
+      LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: percent_discount)
+    ]
+    checkout = LogivanTest::Checkout.new(promotion_rules)
+    checkout.scan create_sample_item
+    # applied 2 rules based on price after apply each rule
+    checkout.rules_priority = true
+    # apply rule 1
+    expect_price = discount_price
+    # apply rule 2
+    expect_price -= expect_price * percent_discount / 100 if expect_price >= discount_point
+    # apply rule 3
+    expect_price -= expect_price * percent_discount / 100 if expect_price >= discount_point
+    expect(checkout.total).to equal(expect_price)
+  end
+
+  it 'Error when applied mutiple rules for same code' do
+    discount_point = 1
+    promotion_rules = [
+      LogivanTest::DiscountByAmountSpecificItemRule.new(
+        apply_code: apply_code, amount_items: 1, discount_price: discount_price
+      ),
+      LogivanTest::DiscountByAmountSpecificItemRule.new(
+        apply_code: apply_code, amount_items: 1, discount_price: discount_price
+      )
+    ]
+    expect{LogivanTest::Checkout.new(promotion_rules)}.to raise_error('Error: Cannot applied mutiple rules for 1 item code')
   end
 end
