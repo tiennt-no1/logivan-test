@@ -10,9 +10,9 @@ require_relative '../lib/rules/discount_by_total_price_rule.rb'
 require_relative '../lib/item.rb'
 require_relative './spec_helper.rb'
 
-def discount_10_percent(items, discount_point)
+def discount_x_percent(items, discount_point, x)
   sum = items.inject(0) { |sum, item| sum += item.price }
-  sum = sum * 90 / 100 if sum >= discount_point
+  sum = sum * (100-x) / 100 if sum >= discount_point
   sum.round(2)
 end
 
@@ -64,15 +64,7 @@ RSpec.describe LogivanTest::Checkout do
     price_without_discount = items.inject(0) { |sum, item| sum += item.price }
     expect(checkout.total).to be <= price_without_discount
     expect(checkout.total).to be > 60
-    expect(checkout.total).to equal(discount_10_percent(items, 60))
-  end
-
-  it 'checkout with discount 10 percent with 100 items' do
-    discount_point = 60
-    promotion_rules = [LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: 10)]
-    checkout = LogivanTest::Checkout.new(promotion_rules)
-    100.times { checkout.scan create_item }
-    expect(checkout.total).to equal(discount_10_percent(checkout.items, discount_point))
+    expect(checkout.total).to equal(discount_x_percent(items, 60, 10))
   end
 
   it 'checkout with discount 10 percent 1 item' do
@@ -82,8 +74,42 @@ RSpec.describe LogivanTest::Checkout do
     checkout = LogivanTest::Checkout.new(promotion_rules)
     item = create_item; item.price = item_price
     checkout.scan item
+    # cannot apply discount
     expect(checkout.total).to equal(item_price)
-    expect(checkout.total).to equal(discount_10_percent(checkout.items, discount_point))
+    checkout.clear_items
+    item_price = 60.0
+    item.price = item_price
+    checkout.scan item
+
+    expect(checkout.total).to equal(item_price*0.9)
+  end
+
+  it 'checkout with discount 10 percent for 100 items' do
+    item_price = 60.0
+    discount_point = 60.0
+    promotion_rules = [LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: 10)]
+    checkout = LogivanTest::Checkout.new(promotion_rules)
+    100.times do
+      item = create_item 
+      item.price = item_price
+      checkout.scan item
+    end
+    expect(checkout.total).to equal(discount_x_percent(checkout.items, discount_point, 10))
+    expect(checkout.total).to equal(item_price*0.9*100)
+  end
+
+  it 'checkout with discount 30 percent for 100 items' do
+    discount_point = 60.0
+    item_price = 60.0
+    promotion_rules = [LogivanTest::DiscountByTotalPriceRule.new(discount_point: discount_point, percent_discount: 30)]
+    checkout = LogivanTest::Checkout.new(promotion_rules)
+    100.times do
+      item = create_item 
+      item.price = item_price
+      checkout.scan item
+    end
+    expect(checkout.total).to equal(discount_x_percent(checkout.items, discount_point, 30))
+    expect(checkout.total).to equal(item_price*0.7*100)
   end
 
   it 'checkout with discount by drop price' do

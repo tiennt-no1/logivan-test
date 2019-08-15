@@ -10,20 +10,6 @@ require_relative '../lib/rules/discount_by_total_price_rule.rb'
 require_relative '../lib/item.rb'
 require_relative './spec_helper.rb'
 
-def discount_10_percent(items, discount_point)
-  sum = items.inject(0) { |sum, item| sum += item.price }
-  sum = sum * 90 / 100 if sum >= discount_point
-  sum.round(2)
-end
-
-def discount_by_drop_price(items, drop_code, drop_price, min_amount)
-  discountable = items.select { |item| item.code == drop_code }.size >= min_amount
-  sum = items.inject(0) do |sum, item|
-    sum += item.code == (discountable && drop_code) ? drop_price : item.price
-  end
-  sum.round(2)
-end
-
 RSpec.describe LogivanTest::Checkout do
   let (:discount_price) { 60.0 }
   let (:item_price) { 70.0 }
