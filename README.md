@@ -1,7 +1,7 @@
-# How to use
-Install to Gemfile:
+# How to install
+Add this line to Gemfile:
 ```ruby
-gem 'logivan-test', git: https://github.com/tiennt-no1/logivan-test
+gem 'logivan-test', git: 'https://github.com/tiennt-no1/logivan-test'
 ```
 then run `bundle install`
 
