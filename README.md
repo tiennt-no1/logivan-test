@@ -1,7 +1,17 @@
-# frozen_string_literal: true
+# How to use
+Install to Gemfile:
+```ruby
+gem 'logivan-test', git: https://github.com/tiennt-no1/logivan-test
+```
+then run `bundle install`
 
+# Require on code
+```ruby 
 require 'logivan-test'
+```
 
+# Example
+```ruby
 # each item have code, name and price
 # we can add one item more than one time by scan
 item_data = [
@@ -10,7 +20,6 @@ item_data = [
   { code: '002', name: 'Personalised cufflinks', price: 45.00 },
   { code: '003', name: 'Kids T-shirt', price: 19.95 }
 ]
-
 # rule or promotion rule will decide how much customer will be discount to incentive for customer
 
 # DiscountByAmountSpecificItemRule
@@ -40,10 +49,8 @@ checkout.total
 # toal : 83.45 - 8.34 - (9.25 - 8.5)*2 = 73.61
 
 # we see the rule2(discount 10%) is apply based on total, but if you want to apply when finish rule 1. we can use
-
 checkout.rules_priority = true
-
-puts checkout.total
+checkout.total
 # 73.76
 # Detail: 
 # 001 : 9.25
@@ -52,13 +59,12 @@ puts checkout.total
 # 003 : 19.95
 # ----------------
 # toal : 83.45 - (9.25 - 8.5)*2 = 81.95 - 8.19 = 73.76
+```
 
-#other options for the promotion rule:
-# percent_discount, default is 0
-# discount_price, default is 0
-# calculate discount based on percen (eg: 10%) or discount_price (eg: from 9.25 to 8.5), just use 1 kind
-# apply_code : the code will apply discount, default is :all
-# amount_items, use on DiscountByAmountSpecificItemRule, discount will applied if buy more or equal than amount_item
-# discount_point, use on DiscountByTotalPriceRule, discount will applied if total money >= discount_point
-
-
+## Other options for the promotion rule:
+* percent_discount, default is 0
+* discount_price, default is 0
+calculate discount based on percen (eg: 10%) or discount_price (eg: from 9.25 to 8.5), just use 1 setting for 1 rule
+* apply_code : the code will apply discount, default is :all
+* amount_items: use on DiscountByAmountSpecificItemRule, discount will applied if buy more or equal than amount_item
+* discount_point: use on DiscountByTotalPriceRule, discount will applied if total money >= discount_point
