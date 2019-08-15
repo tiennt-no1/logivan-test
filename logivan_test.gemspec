@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.author = 'Thanh Tien'
   s.version = '0.0.0'
   s.summary = 'for interview test'
-  s.files = Dir['lib/*.rb'] + Dir['rspec/*.rb']
+  s.files = Dir['lib/*.rb']+ Dir['lib/rules/*.rb'] + Dir['rspec/*.rb']
   s.require_paths = %w[lib rspec]
   s.add_dependency 'activesupport', '~> 5.0'
   s.add_development_dependency 'faker', '~> 2.1.2'
